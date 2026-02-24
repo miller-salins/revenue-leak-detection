@@ -1,4 +1,4 @@
--- Staging table: a landing zone to receive the data, allowing it to receive the date without data constrains.
+-- Staging table for payments: a landing zone to receive the data, allowing it to receive the date without data constrains.
 
 CREATE TABLE raw_payments_audits(
     transaction_id TEXT, -- primary key
@@ -7,6 +7,32 @@ CREATE TABLE raw_payments_audits(
     amount_billed TEXT,
     amount_paid TEXT,
     payment_status TEXT, --assuming it will be included in the raw data
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- staging table for customers: contains the data of all customers
+
+CREATE TABLE raw_customers(
+    customer_id TEXT, -- primary key
+    customer_name TEXT, --dirty data expected
+    email TEXT, -- personal info (may be useful)
+    phone_number TEXT, -- personal info (may be useful)
+    signup_date TEXT, -- registration date to identify "cohorts"
+    plan_type TEXT, -- Current plan assigned to the user
+    customer_status TEXT, --Active, churn, or suspended (to define)
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+--Staging table for plans: basically the business rules for revenue validation
+
+CREATE TABLE raw_plans (
+    plan_id TEXT, -- primary key
+    plan_name TEXT, -- Basic, pro, Enterprise (to define)
+    monthly_price TEXT, -- expected price (benchmark for leaks)
+    currency TEXT, -- in case of international audits
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
