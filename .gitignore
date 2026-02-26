@@ -1,0 +1,6 @@
+# Ignorar archivos de datos personales
+data/
+
+# Ignorar archivos de configuración local
+.env
+my.ini
