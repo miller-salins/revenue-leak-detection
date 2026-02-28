@@ -14,7 +14,6 @@ CREATE TABLE raw_payment_audit(
 );
 
 -- staging table for customers: contains the data of all customers
-
 CREATE TABLE raw_customer(
     customer_id TEXT, -- primary key
     batch_id TEXT, -- Internal load identifier for rollback safety
@@ -32,7 +31,6 @@ CREATE TABLE raw_customer(
 
 
 -- Staging table for plans: basically the business rules for revenue validation
-
 CREATE TABLE raw_plan (
     plan_id TEXT, -- primary key
     plan_name TEXT, -- Basic, pro, Enterprise (to define)
