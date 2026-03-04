@@ -24,3 +24,13 @@ SELECT
     SUM(leaked_amount) AS total_leaked_amount
 FROM vw_revenue_leaks
 GROUP BY currency;
+
+-- 3. View: Summary by Source System
+CREATE OR REPLACE VIEW vw_leaks_by_source_system AS
+SELECT
+    source_system,
+    COUNT(transaction_id) AS total_leaked_transactions,
+    SUM(leaked_amount) AS total_leaked_amount,
+    ROUND(AVG(leaked_amount), 2) AS avg_leak_impact
+FROM vw_revenue_leaks
+GROUP BY source_system;
