@@ -34,3 +34,15 @@ SELECT
     ROUND(AVG(leaked_amount), 2) AS avg_leak_impact
 FROM vw_revenue_leaks
 GROUP BY source_system;
+
+
+-- 4. View: Top 20 High-Value Recovery Targets (Pareto Principle Efficiency)
+CREATE OR REPLACE VIEW vw_leaks_by_customer AS
+SELECT 
+    customer_id,
+    COUNT(transaction_id) AS incident_count,
+    SUM(leaked_amount) AS total_to_recover
+FROM vw_revenue_leaks
+GROUP BY customer_id
+ORDER BY total_to_recover DESC
+LIMIT 20; -- only the top 20 avoiding to bring the total of possible customers the bussiness would  need to charge.
