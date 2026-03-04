@@ -8,7 +8,7 @@ SELECT
     amount_billed,
     amount_paid,
     currency,
-    (amount_billed - amount_paid) AS leaked_amount,
+    ROUND((amount_billed - amount_paid), 2) AS leaked_amount,
     payment_status,
     source_system
 FROM raw_payment_audit
