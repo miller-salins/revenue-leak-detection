@@ -22,4 +22,6 @@ CREATE TABLE customer(
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
+-- Performance Optimization Indexes
+CREATE INDEX idx_customer_source_id ON customer(source_customer_id);
+CREATE INDEX idx_customer_email ON customer(email);
