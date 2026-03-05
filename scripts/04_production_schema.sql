@@ -53,15 +53,15 @@ CREATE INDEX idx_plan_source_id ON plan(source_plan_id);
 
 
 -- Payment Table
-CREATE TABLE paymemt(
+CREATE TABLE payment(
     -- 1. Internal Key
     db_payment_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     -- 2. External Key
     source_payment_id VARCHAR(100) NOT NULL,
     -- 3. Core Business Data
     db_customer_id INTEGER NOT NULL,
-    db_plan_id INTEGER
-    payment_date TIMESTAMP
+    db_plan_id INTEGER,
+    payment_date TIMESTAMP,
     amount DECIMAL(18,8),
     currency VARCHAR(50),
     payment_status VARCHAR(50),
