@@ -52,3 +52,33 @@ CREATE TABLE plan (
 CREATE INDEX idx_plan_source_id ON plan(source_plan_id);
 
 
+-- Payment Table
+CREATE TABLE paymemt(
+    -- 1. Internal Key
+    db_payment_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -- 2. External Key
+    source_payment_id VARCHAR(100) NOT NULL,
+    -- 3. Core Business Data
+    db_customer_id INTEGER NOT NULL,
+    db_plan_id INTEGER
+    payment_date TIMESTAMP
+    amount DECIMAL(18,8),
+    currency VARCHAR(50),
+    payment_status VARCHAR(50),
+    -- 4. Scalability
+    metadata JSON,
+    -- 5. Lineage and Audit
+    batch_id VARCHAR(50),
+        source_system VARCHAR(50),
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (db_customer_id) REFERENCES customer(db_customer_id),
+    FOREIGN KEY (db_plan_id) REFERENCES plan(db_plan_id)
+);
+
+
+-- Performance Optimization Indexes
+CREATE INDEX idx_payment_source_id ON payment(source_payment_id);
+CREATE INDEX idx_payment_customer ON payment(db_customer_id);
+CREATE INDEX idx_payment_status ON payment(payment_status);
