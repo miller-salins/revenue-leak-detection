@@ -26,3 +26,24 @@ FROM vw_revenue_leaks
 GROUP BY currency;
 
 
+-- 3 Summary by source system. Lost revenue by source system
+CREATE OR REPLACE VIEW vw_leaks_by_source_system AS
+SELECT
+    source_system,
+    COUNT(payment_id) AS total_leaked_transactions,
+    SUM(leaked_amount) AS total_leaked_amount,
+    ROUND(AVG(leaked_amount), 2) AS avg_leak_impact
+FROM vw_revenue_leaks
+GROUP BY source_system;
+
+-- 4 Summary by customer. Top customers who represent the most revenue leak
+CREATE OR REPLACE VIEW vw_leaks_by_customer AS
+SELECT 
+    email,
+    COUNT(payment_id) AS frequency,
+    SUM(leaked_amount) AS total_leaked_amount,
+    MAX(leaked_amount) AS max_single_leak
+FROM vw_revenue_leaks
+GROUP BY email
+ORDER BY total_leaked_amount DESC
+LIMIT 20;
