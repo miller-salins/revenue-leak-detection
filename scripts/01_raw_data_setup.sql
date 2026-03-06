@@ -33,8 +33,9 @@ CREATE TABLE raw_customer(
 -- Staging table for plans: basically the business rules for revenue validation
 CREATE TABLE raw_plan (
     plan_id TEXT, -- primary key
+    batch_id TEXT,
     plan_name TEXT, -- Basic, pro, Enterprise (to define)
-    monthly_price TEXT, -- expected price (benchmark for leaks)
+    price TEXT, -- expected price (benchmark for leaks)
     currency TEXT, -- in case of international audits
     is_active INTEGER DEFAULT 1, -- To handle deprecated plans without losing history
     source_system TEXT, -- Tracks if data comes from Web, Ios, Android -- is metadata
