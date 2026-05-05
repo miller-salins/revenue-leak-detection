@@ -1,5 +1,4 @@
 -- Staging table for payments: a landing zone to receive the data, allowing it to receive the date without data constrains.
-
 CREATE TABLE raw_payment_audit(
     payment_id TEXT, -- primary key
     batch_id TEXT, -- Internal load identifier for rollback safety
@@ -29,7 +28,6 @@ CREATE TABLE raw_customer(
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 
 -- Staging table for plans: basically the business rules for revenue validation
 CREATE TABLE raw_plan (
